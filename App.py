@@ -13,11 +13,6 @@ app = App(
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
 )
 
-number_incident = 298374
-incident = 'Indisponibilidade no Pix'
-title = f'INC{number_incident}-{incident}'
-id_file = '1M6sg06TrB2hSk3WSwe_LZoP0rBRFU5Iw'
-
 attachments =  [
 		{
 			"color": "#f2c744",
