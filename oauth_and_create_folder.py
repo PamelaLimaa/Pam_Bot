@@ -33,10 +33,9 @@ def create_folder():
     month_and_year = datetime.now().strftime('%m/%Y')
 
     try:
-        # Check if a folder with the current month and year already exists in the specified folder
+        # olhando se na lista no meu drive tem o mesmo nome da pasta que está sendo criada
         search_folder = f"name='PostMortem-{month_and_year}' and mimeType='application/vnd.google-apps.folder' and trashed=false"
         lista = service.files().list(q=search_folder, spaces='drive').execute()
-        print(lista, month_and_year)
 
         if 'files' in lista and len(lista['files']) > 0:
             print(F'essa pasta já existe com o mesmo nome {month_and_year}')
