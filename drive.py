@@ -5,8 +5,9 @@ from googleapiclient.errors import HttpError
 from google.oauth2.credentials import Credentials
 from datetime import datetime
 
-SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly']
+SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/documents']
 
+# Autenticação 
 def my_oauth():
     creds = None
 
@@ -14,10 +15,10 @@ def my_oauth():
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
 
-    # Se não houver tokens válidos disponíveis, faça o login pfv
+    # Se não houver tokens válidos disponíveis, faça o login
     if not creds or not creds.valid:
         flow = InstalledAppFlow.from_client_secrets_file(
-            'credencial.json', SCOPES)
+            'C:\\Users\\layan\\Estudos\\Python\\slack_bot\\bot_python_slack\\credenciais\\credencial.json', SCOPES)
         creds = flow.run_local_server(port=0)
 
         # Salve os tokens de acesso no arquivo token.json para uso futuro
@@ -26,6 +27,7 @@ def my_oauth():
 
     return creds
 
+# Criar a pasta
 def create_folder():
     credentials = my_oauth()
     service = build('drive', 'v3', credentials=credentials)
@@ -58,14 +60,14 @@ def create_folder():
 
 folder_id = create_folder()
 
-# Função de copiar o arquivo existente, mover para a pasta e gerar link
+# Função de copiar o arquivo existente, mover para a pasta, criar permissão e gerar link
 def copy_file_move_folder_generate_link():
     credentials = my_oauth()
     service = build('drive', 'v3', credentials=credentials)
     file_id = '1fceJGgUpHcJsqxi_wY172q8xCEGDLftIpe41rsZpRes'
     source_folder = '1OvOba2dTsZRy-vVuIX6gIVB5m52ucfCI'
     target_folder = folder_id
-    number_incident = 'Pamela'
+    number_incident = '928373'
     incident = 'testando'
     title = f'INC{number_incident}-{incident}'
 
@@ -83,18 +85,18 @@ def copy_file_move_folder_generate_link():
                                       removeParents=source_folder,
                                       fields='id, parents').execute()
 
-        # Cria uma permissão para permitir que qualquer usuário com o link possa acessar o arquivo
+        # Cria permissão para todos escrever, tem como colocar tbm para "dominio"
         permission = {
             'type': 'anyone',
-            'role': 'reader',
+            'role': 'writer',
         }
         service.permissions().create(fileId=new_id, body=permission).execute()
 
-        # Gera o link para o arquivo recém criado
+        # Gerar link
         file = service.files().get(fileId=new_id, fields='webViewLink').execute()
         link = file.get('webViewLink')
 
-        return link
+        return link, new_id
     except HttpError as error:
         print(F'An error occurred: {error}')
         return None
