@@ -19,3 +19,6 @@ https://stackoverflow.com/questions/35044036/getting-webviewlinks-with-google-dr
 
 ### Inserir texto no documento
 https://developers.google.com/docs/api/how-tos/merge?hl=pt-br
+
+### Biblioteca
+datetime
