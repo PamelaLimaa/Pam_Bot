@@ -28,7 +28,7 @@ def update_home_tab(client, event):
 
     inserir_texto(new_id, number_incident, incident, descricao)
 
-    # bloco de mensagem com o link do arquivo
+    # bloco de mensagem de crise
     attachments =  [
         {
             "color": "#f2c744",

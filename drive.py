@@ -44,7 +44,6 @@ def create_folder():
             print(f'Pasta já existe com o mesmo nome: "{existing_folder["name"]}", ID: "{existing_folder["id"]}"')
             return existing_folder["id"]
         else:
-            # Se não, criar a pasta com o mes/ano corretamente
             file_metadata = {
                 'name':F'PostMortem-{month_and_year}',
                 'mimeType': 'application/vnd.google-apps.folder',
@@ -77,7 +76,7 @@ def copy_file_move_folder_generate_link():
         new_file = service.files().copy(fileId=file_id, body=copied_file).execute()
         new_id = new_file['id']
 
-        # Move o arquivo para o diretório de destino
+        # Mover o arquivo para o diretório de destino
         file = service.files().get(fileId=new_file['id'], fields='parents').execute()
         file = service.files().get(fileId=file_id, fields='parents').execute()
         file = service.files().update(fileId=new_file['id'], 
