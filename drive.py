@@ -18,7 +18,7 @@ def my_oauth():
     # Se não houver tokens válidos disponíveis, faça o login
     if not creds or not creds.valid:
         flow = InstalledAppFlow.from_client_secrets_file(
-            'C:\\Users\\layan\\Estudos\\Python\\slack_bot\\bot_python_slack\\credenciais\\credencial.json', SCOPES)
+            'CAMIHHO CREDENCIAL.JSON', SCOPES)
         creds = flow.run_local_server(port=0)
 
         # Salve os tokens de acesso no arquivo token.json para uso futuro
